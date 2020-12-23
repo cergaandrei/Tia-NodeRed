@@ -1,0 +1,1034 @@
+[
+    {
+        "id": "4800f0c2.b28d6",
+        "type": "debug",
+        "z": "7c63cde9.ad23d4",
+        "name": "output",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 392.33334732055664,
+        "y": 105.66666316986084,
+        "wires": []
+    },
+    {
+        "id": "9e388a72.91aff8",
+        "type": "function",
+        "z": "7c63cde9.ad23d4",
+        "name": "timeConvert",
+        "func": "if ( !msg.timestamp ) msg.timestamp = Math.round(+new Date());\n\nvar dt = new Date(msg.timestamp);\nvar msg = {\n\t'month':\tdt.getMonth() + 1,\n\t'day':\t\tdt.getDate(),\n\t'year':\t\tdt.getFullYear(),\n\t'hours':\tdt.getHours(),\n\t'mins':\t\tdt.getMinutes(),\n\t'msecs':\tdt.getMilliseconds()\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 225,
+        "y": 133,
+        "wires": [
+            [
+                "4800f0c2.b28d6"
+            ]
+        ]
+    },
+    {
+        "id": "1bb5504a.e7743",
+        "type": "inject",
+        "z": "7c63cde9.ad23d4",
+        "name": "Force",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 111,
+        "y": 87,
+        "wires": [
+            [
+                "9e388a72.91aff8"
+            ]
+        ]
+    },
+    {
+        "id": "daffcc27.e6099",
+        "type": "comment",
+        "z": "7c63cde9.ad23d4",
+        "name": "convert timestamp to readable human time",
+        "info": "",
+        "x": 243,
+        "y": 39,
+        "wires": []
+    },
+    {
+        "id": "ecbe15dc.c96798",
+        "type": "s7 in",
+        "z": "7c63cde9.ad23d4",
+        "endpoint": "ece2f06f.7d49e",
+        "mode": "single",
+        "variable": "Speed_LV",
+        "diff": true,
+        "name": "A_Speed",
+        "x": 111,
+        "y": 318,
+        "wires": [
+            [
+                "bd2e613.d1affa",
+                "71b5bb2d.5aab44"
+            ]
+        ]
+    },
+    {
+        "id": "bd2e613.d1affa",
+        "type": "ui_text",
+        "z": "7c63cde9.ad23d4",
+        "group": "dba3461f.14b3c8",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "A_SP",
+        "label": "Speed:",
+        "format": "{{msg.payload | number:1}} rpm",
+        "layout": "row-spread",
+        "x": 539,
+        "y": 305,
+        "wires": []
+    },
+    {
+        "id": "c0691d22.6c038",
+        "type": "s7 in",
+        "z": "7c63cde9.ad23d4",
+        "endpoint": "ece2f06f.7d49e",
+        "mode": "single",
+        "variable": "Current_LV",
+        "diff": true,
+        "name": "",
+        "x": 112,
+        "y": 372,
+        "wires": [
+            [
+                "7545b967.6e8178"
+            ]
+        ]
+    },
+    {
+        "id": "9e242e9.6d986d",
+        "type": "s7 in",
+        "z": "7c63cde9.ad23d4",
+        "endpoint": "ece2f06f.7d49e",
+        "mode": "single",
+        "variable": "Torque_LV",
+        "diff": true,
+        "name": "",
+        "x": 101,
+        "y": 416,
+        "wires": [
+            [
+                "b0002b64.3067e8"
+            ]
+        ]
+    },
+    {
+        "id": "2c710c88.b42f14",
+        "type": "s7 in",
+        "z": "7c63cde9.ad23d4",
+        "endpoint": "ece2f06f.7d49e",
+        "mode": "single",
+        "variable": "Power_LV",
+        "diff": true,
+        "name": "",
+        "x": 114,
+        "y": 461,
+        "wires": [
+            [
+                "5ab54052.1bc6c"
+            ]
+        ]
+    },
+    {
+        "id": "2b09666f.5fd6fa",
+        "type": "ui_text",
+        "z": "7c63cde9.ad23d4",
+        "group": "dba3461f.14b3c8",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Current:",
+        "format": "{{msg.payload}} A",
+        "layout": "row-spread",
+        "x": 540,
+        "y": 352,
+        "wires": []
+    },
+    {
+        "id": "cc9275af.7f82c8",
+        "type": "ui_text",
+        "z": "7c63cde9.ad23d4",
+        "group": "dba3461f.14b3c8",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Torque:",
+        "format": "{{msg.payload | number : 2}} Nm",
+        "layout": "row-spread",
+        "x": 549,
+        "y": 403,
+        "wires": []
+    },
+    {
+        "id": "1a2dbcd.71d5043",
+        "type": "ui_text",
+        "z": "7c63cde9.ad23d4",
+        "group": "dba3461f.14b3c8",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Power:",
+        "format": "{{msg.payload}} kW",
+        "layout": "row-spread",
+        "x": 546,
+        "y": 448,
+        "wires": []
+    },
+    {
+        "id": "9acc4ccf.a52fb",
+        "type": "comment",
+        "z": "7c63cde9.ad23d4",
+        "name": "Get live data from PLC and display to GUI",
+        "info": "Get live data from PLC and display to GUI",
+        "x": 184.5,
+        "y": 272,
+        "wires": []
+    },
+    {
+        "id": "2777ceab.1dfe52",
+        "type": "ui_slider",
+        "z": "7c63cde9.ad23d4",
+        "name": "",
+        "label": "Speed",
+        "group": "2b5c0f4b.56a14",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "",
+        "min": "0",
+        "max": "100",
+        "step": "1",
+        "x": 93,
+        "y": 713,
+        "wires": [
+            [
+                "7cd86c20.c71484"
+            ]
+        ]
+    },
+    {
+        "id": "9c5693b9.48043",
+        "type": "comment",
+        "z": "7c63cde9.ad23d4",
+        "name": "Remote control the Motor",
+        "info": "",
+        "x": 160.5,
+        "y": 579.0000171661377,
+        "wires": []
+    },
+    {
+        "id": "7cd86c20.c71484",
+        "type": "s7 out",
+        "z": "7c63cde9.ad23d4",
+        "endpoint": "ece2f06f.7d49e",
+        "variable": "Speed_SP",
+        "name": "",
+        "x": 633,
+        "y": 695,
+        "wires": []
+    },
+    {
+        "id": "6dd930cc.82de",
+        "type": "s7 out",
+        "z": "7c63cde9.ad23d4",
+        "endpoint": "ece2f06f.7d49e",
+        "variable": "On",
+        "name": "",
+        "x": 628,
+        "y": 788,
+        "wires": []
+    },
+    {
+        "id": "9b8c90fa.1e496",
+        "type": "s7 in",
+        "z": "7c63cde9.ad23d4",
+        "endpoint": "ece2f06f.7d49e",
+        "mode": "single",
+        "variable": "Voltage_LV",
+        "diff": true,
+        "name": "",
+        "x": 101,
+        "y": 514,
+        "wires": [
+            [
+                "9d6ba786.36e058"
+            ]
+        ]
+    },
+    {
+        "id": "90df1dba.f96dd",
+        "type": "ui_text",
+        "z": "7c63cde9.ad23d4",
+        "group": "dba3461f.14b3c8",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Voltage:",
+        "format": "{{msg.payload}} V DC",
+        "layout": "row-spread",
+        "x": 534.5,
+        "y": 507,
+        "wires": []
+    },
+    {
+        "id": "9d6ba786.36e058",
+        "type": "function",
+        "z": "7c63cde9.ad23d4",
+        "name": "ConvertVoltage",
+        "func": "msg.payload = msg.payload/10\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 358,
+        "y": 497,
+        "wires": [
+            [
+                "90df1dba.f96dd"
+            ]
+        ]
+    },
+    {
+        "id": "5ab54052.1bc6c",
+        "type": "function",
+        "z": "7c63cde9.ad23d4",
+        "name": "Convert Power",
+        "func": "msg.payload = msg.payload/10000\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 377.5,
+        "y": 458,
+        "wires": [
+            [
+                "1a2dbcd.71d5043"
+            ]
+        ]
+    },
+    {
+        "id": "7545b967.6e8178",
+        "type": "function",
+        "z": "7c63cde9.ad23d4",
+        "name": "ConvertCurrent",
+        "func": "msg.payload = msg.payload/10000\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 331.5,
+        "y": 363,
+        "wires": [
+            [
+                "2b09666f.5fd6fa"
+            ]
+        ]
+    },
+    {
+        "id": "b0002b64.3067e8",
+        "type": "function",
+        "z": "7c63cde9.ad23d4",
+        "name": "Convert torque",
+        "func": "msg.payload = msg.payload/1000\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 326.5,
+        "y": 415,
+        "wires": [
+            [
+                "cc9275af.7f82c8"
+            ]
+        ]
+    },
+    {
+        "id": "f11efa9b.924b48",
+        "type": "ui_switch",
+        "z": "7c63cde9.ad23d4",
+        "name": "",
+        "label": "Motor ON",
+        "group": "2b5c0f4b.56a14",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 94,
+        "y": 785,
+        "wires": [
+            [
+                "6dd930cc.82de"
+            ]
+        ]
+    },
+    {
+        "id": "78c84ed8.84ca4",
+        "type": "ui_button",
+        "z": "7c63cde9.ad23d4",
+        "name": "",
+        "group": "2b5c0f4b.56a14",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Reset",
+        "color": "red",
+        "bgcolor": "yellow",
+        "icon": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "topic": "",
+        "x": 93,
+        "y": 977,
+        "wires": [
+            [
+                "565e56f8.8c7be8"
+            ]
+        ]
+    },
+    {
+        "id": "98ac67e1.44b9d8",
+        "type": "s7 out",
+        "z": "7c63cde9.ad23d4",
+        "endpoint": "ece2f06f.7d49e",
+        "variable": "Reset",
+        "name": "",
+        "x": 597,
+        "y": 977,
+        "wires": []
+    },
+    {
+        "id": "565e56f8.8c7be8",
+        "type": "trigger",
+        "z": "7c63cde9.ad23d4",
+        "op1": "true",
+        "op2": "false",
+        "op1type": "bool",
+        "op2type": "bool",
+        "duration": "500",
+        "extend": false,
+        "units": "ms",
+        "reset": "",
+        "name": "",
+        "x": 354,
+        "y": 978,
+        "wires": [
+            [
+                "98ac67e1.44b9d8"
+            ]
+        ]
+    },
+    {
+        "id": "b8b6c63b.fb3228",
+        "type": "s7 in",
+        "z": "7c63cde9.ad23d4",
+        "endpoint": "ece2f06f.7d49e",
+        "mode": "single",
+        "variable": "IOT_Seed",
+        "diff": true,
+        "name": "",
+        "x": 97,
+        "y": 1063,
+        "wires": [
+            [
+                "9fede9d9.f23b48"
+            ]
+        ]
+    },
+    {
+        "id": "9fede9d9.f23b48",
+        "type": "s7 out",
+        "z": "7c63cde9.ad23d4",
+        "endpoint": "ece2f06f.7d49e",
+        "variable": "IOT_Key",
+        "name": "",
+        "x": 590,
+        "y": 1119,
+        "wires": []
+    },
+    {
+        "id": "ed28bdec.33d8c",
+        "type": "ui_switch",
+        "z": "7c63cde9.ad23d4",
+        "name": "",
+        "label": "Sens",
+        "group": "2b5c0f4b.56a14",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 83,
+        "y": 862,
+        "wires": [
+            [
+                "4b0264a7.cdf54c"
+            ]
+        ]
+    },
+    {
+        "id": "4b0264a7.cdf54c",
+        "type": "s7 out",
+        "z": "7c63cde9.ad23d4",
+        "endpoint": "ece2f06f.7d49e",
+        "variable": "Sens",
+        "name": "",
+        "x": 628,
+        "y": 865,
+        "wires": []
+    },
+    {
+        "id": "71b5bb2d.5aab44",
+        "type": "ui_chart",
+        "z": "7c63cde9.ad23d4",
+        "name": "",
+        "group": "e2ded323.d4fe7",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Speed Chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "ymin": "-1400",
+        "ymax": "1500",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "x": 554,
+        "y": 245,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "c35a0596.5bf338",
+        "type": "e-mail",
+        "z": "7c63cde9.ad23d4",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "name": "murar.mircea@gmail.com",
+        "dname": "",
+        "x": 812,
+        "y": 1242,
+        "wires": []
+    },
+    {
+        "id": "ce758b22.a12a38",
+        "type": "s7 in",
+        "z": "7c63cde9.ad23d4",
+        "endpoint": "ece2f06f.7d49e",
+        "mode": "single",
+        "variable": "Email_Motor_Running",
+        "diff": true,
+        "name": "",
+        "x": 165,
+        "y": 1338,
+        "wires": [
+            [
+                "389c5a24.d6ef16"
+            ]
+        ]
+    },
+    {
+        "id": "389c5a24.d6ef16",
+        "type": "switch",
+        "z": "7c63cde9.ad23d4",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 408,
+        "y": 1333,
+        "wires": [
+            [
+                "9b8892b6.b362"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "9b8892b6.b362",
+        "type": "change",
+        "z": "7c63cde9.ad23d4",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Motor is running !",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 582,
+        "y": 1242,
+        "wires": [
+            [
+                "c35a0596.5bf338"
+            ]
+        ]
+    },
+    {
+        "id": "d482fd7.b082c",
+        "type": "s7 in",
+        "z": "7c63cde9.ad23d4",
+        "endpoint": "ece2f06f.7d49e",
+        "mode": "single",
+        "variable": "Speed_LV",
+        "diff": true,
+        "name": "A_Speed",
+        "x": 122,
+        "y": 226,
+        "wires": [
+            [
+                "c8114ada.f20318"
+            ]
+        ]
+    },
+    {
+        "id": "a7fc534d.14c0c",
+        "type": "debug",
+        "z": "7c63cde9.ad23d4",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 251.00009155273438,
+        "y": 178.00005054473877,
+        "wires": []
+    },
+    {
+        "id": "c8114ada.f20318",
+        "type": "ui_gauge",
+        "z": "7c63cde9.ad23d4",
+        "name": "",
+        "group": "dba3461f.14b3c8",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Gauge",
+        "label": "rpm",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "1500",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 524.25,
+        "y": 138.5,
+        "wires": []
+    },
+    {
+        "id": "ac53a7d0.9a7b08",
+        "type": "ui_switch",
+        "z": "7c63cde9.ad23d4",
+        "name": "",
+        "label": "Schimbare sens motor",
+        "group": "2b5c0f4b.56a14",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 154.64285278320312,
+        "y": 921.4285888671875,
+        "wires": [
+            [
+                "3dcbda70.1cff86"
+            ]
+        ]
+    },
+    {
+        "id": "3dcbda70.1cff86",
+        "type": "s7 out",
+        "z": "7c63cde9.ad23d4",
+        "endpoint": "ece2f06f.7d49e",
+        "variable": "Reverse",
+        "name": "",
+        "x": 368.5000114440918,
+        "y": 922.4285888671875,
+        "wires": []
+    },
+    {
+        "id": "91d7e0d6.5c186",
+        "type": "ui_button",
+        "z": "7c63cde9.ad23d4",
+        "name": "",
+        "group": "2b5c0f4b.56a14",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "button_reset",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "topic": "",
+        "x": 417.700008392334,
+        "y": 604.0000085830688,
+        "wires": [
+            [
+                "301b575c.f5c3d8"
+            ]
+        ]
+    },
+    {
+        "id": "9be3d282.67d84",
+        "type": "s7 out",
+        "z": "7c63cde9.ad23d4",
+        "endpoint": "ece2f06f.7d49e",
+        "variable": "Reset2",
+        "name": "",
+        "x": 811.7000122070312,
+        "y": 477,
+        "wires": []
+    },
+    {
+        "id": "301b575c.f5c3d8",
+        "type": "trigger",
+        "z": "7c63cde9.ad23d4",
+        "op1": "true",
+        "op2": "false",
+        "op1type": "bool",
+        "op2type": "bool",
+        "duration": "500",
+        "extend": false,
+        "units": "ms",
+        "reset": "",
+        "name": "",
+        "x": 692,
+        "y": 584,
+        "wires": [
+            [
+                "9be3d282.67d84"
+            ]
+        ]
+    },
+    {
+        "id": "28be3ce3.1306f4",
+        "type": "ui_button",
+        "z": "7c63cde9.ad23d4",
+        "name": "",
+        "group": "e2ded323.d4fe7",
+        "order": 0,
+        "width": "6",
+        "height": "2",
+        "passthru": false,
+        "label": "Buton_BN",
+        "color": "/red",
+        "bgcolor": "/yellow",
+        "icon": "",
+        "payload": "Am fost apasat ! Sobolanii vin!",
+        "payloadType": "str",
+        "topic": "",
+        "x": 407.1000061035156,
+        "y": 1405,
+        "wires": [
+            [
+                "6d3817c6.786f18"
+            ]
+        ]
+    },
+    {
+        "id": "6d3817c6.786f18",
+        "type": "debug",
+        "z": "7c63cde9.ad23d4",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 600.1000061035156,
+        "y": 1408,
+        "wires": []
+    },
+    {
+        "id": "94e7336c.0b91a",
+        "type": "inject",
+        "z": "7c63cde9.ad23d4",
+        "name": "",
+        "topic": "",
+        "payload": "14.8",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 72.83334350585938,
+        "y": 175.33334350585938,
+        "wires": [
+            [
+                "a7fc534d.14c0c"
+            ]
+        ]
+    },
+    {
+        "id": "4df49098.ed514",
+        "type": "s7 out",
+        "z": "7c63cde9.ad23d4",
+        "endpoint": "ece2f06f.7d49e",
+        "variable": "Bit_TEST",
+        "name": "",
+        "x": 422.8333396911621,
+        "y": 655.000036239624,
+        "wires": []
+    },
+    {
+        "id": "f3a93ac2.90e278",
+        "type": "ui_button",
+        "z": "7c63cde9.ad23d4",
+        "name": "",
+        "group": "2b5c0f4b.56a14",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "AMRI-CJ",
+        "color": "red",
+        "bgcolor": "pink",
+        "icon": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "topic": "",
+        "x": 76.83334350585938,
+        "y": 619.0000190734863,
+        "wires": [
+            [
+                "c104b485.3929d8"
+            ]
+        ]
+    },
+    {
+        "id": "c104b485.3929d8",
+        "type": "trigger",
+        "z": "7c63cde9.ad23d4",
+        "op1": "true",
+        "op2": "false",
+        "op1type": "bool",
+        "op2type": "bool",
+        "duration": "500",
+        "extend": false,
+        "units": "ms",
+        "reset": "",
+        "name": "",
+        "x": 243.50000762939453,
+        "y": 652.0000190734863,
+        "wires": [
+            [
+                "4df49098.ed514"
+            ]
+        ]
+    },
+    {
+        "id": "ece2f06f.7d49e",
+        "type": "s7 endpoint",
+        "z": "",
+        "address": "192.168.0.25",
+        "port": "102",
+        "rack": "0",
+        "slot": "1",
+        "localtsaphi": "01",
+        "localtsaplo": "00",
+        "remotetsaphi": "01",
+        "remotetsaplo": "00",
+        "connmode": "rack-slot",
+        "cycletime": "1000",
+        "timeout": "1500",
+        "verbose": "default",
+        "name": "PLC 1",
+        "vartable": [
+            {
+                "addr": "MD700",
+                "name": "Speed_LV"
+            },
+            {
+                "addr": "MD704",
+                "name": "Current_LV"
+            },
+            {
+                "addr": "MR708",
+                "name": "Torque_LV"
+            },
+            {
+                "addr": "MD712",
+                "name": "Power_LV"
+            },
+            {
+                "addr": "M50.0",
+                "name": "On"
+            },
+            {
+                "addr": "MD1000",
+                "name": "Speed_SP"
+            },
+            {
+                "addr": "M9.0",
+                "name": "Man_AUTO"
+            },
+            {
+                "addr": "IW12",
+                "name": "Voltage_LV"
+            },
+            {
+                "addr": "M9.2",
+                "name": "Reset"
+            },
+            {
+                "addr": "MD8028",
+                "name": "IOT_Seed"
+            },
+            {
+                "addr": "MD8032",
+                "name": "IOT_Key"
+            },
+            {
+                "addr": "M10.1",
+                "name": "Sens"
+            },
+            {
+                "addr": "M15.0",
+                "name": "Email_Motor_Running"
+            },
+            {
+                "addr": "MR8008",
+                "name": "Speed_Real"
+            },
+            {
+                "addr": "M1100.0",
+                "name": "Reverse"
+            },
+            {
+                "addr": "M1100.1",
+                "name": "Reset2"
+            },
+            {
+                "addr": "M500.0",
+                "name": "Bit_TEST"
+            }
+        ]
+    },
+    {
+        "id": "dba3461f.14b3c8",
+        "type": "ui_group",
+        "z": "",
+        "name": "Live Data",
+        "tab": "51c544c1.0ed5dc",
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "2b5c0f4b.56a14",
+        "type": "ui_group",
+        "z": "",
+        "name": "Remote Control",
+        "tab": "51c544c1.0ed5dc",
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "e2ded323.d4fe7",
+        "type": "ui_group",
+        "z": "",
+        "name": "Trends",
+        "tab": "53a62611.1009c8",
+        "order": 1,
+        "disp": true,
+        "width": "12"
+    },
+    {
+        "id": "51c544c1.0ed5dc",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Cockpit",
+        "icon": "dashboard",
+        "order": 1
+    },
+    {
+        "id": "53a62611.1009c8",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Trends",
+        "icon": "dashboard",
+        "order": 2
+    }
+]
